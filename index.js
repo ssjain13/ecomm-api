@@ -18,6 +18,10 @@ const stripe = new stripeApi(
 
 const YOUR_DOMAIN = "https://ssjain13.github.io/";
 
+app.get("/", async (req, res) => {
+  res.send("Server is running");
+});
+
 app.post("/create-checkout-session", async (req, res) => {
   const p = req.body;
   try {
