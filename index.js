@@ -16,7 +16,7 @@ const stripe = new stripeApi(
   "sk_test_51MOIWsSGyTooPOuOwIsktCbzFaLJmVNkTXYrld5YAFYYmniQ7v5f5VMulMW2mcHjxRnGzj3QGO28FuogrYK6B8I700y96ZelYV"
 );
 
-const YOUR_DOMAIN = "http://localhost:5173";
+const YOUR_DOMAIN = "https://ssjain13.github.io/";
 
 app.post("/create-checkout-session", async (req, res) => {
   const p = req.body;
@@ -24,7 +24,6 @@ app.post("/create-checkout-session", async (req, res) => {
     const session = await stripe.checkout.sessions.create({
       line_items: [
         {
-          // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
           price: p.id,
           quantity: 1,
         },
@@ -33,8 +32,9 @@ app.post("/create-checkout-session", async (req, res) => {
       success_url: `${YOUR_DOMAIN}/success`,
       cancel_url: `${YOUR_DOMAIN}/canceled`,
     });
-    console.log(session);
-    res.header("Access-Control-Allow-Origin", "*").send(JSON.stringify(session.url));
+    res
+      .header("Access-Control-Allow-Origin", "*")
+      .send(JSON.stringify(session.url));
   } catch (err) {
     res.status(err.statusCode).send(err.message);
   }
