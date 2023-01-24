@@ -1,9 +1,12 @@
-// This is your test secret API key.
-const stripeApi = require("stripe");
-var cors = require("cors");
-
 const express = require("express");
 const app = express();
+// This is your test secret API key.
+const stripeApi = require("stripe");
+const serverless = require("serverless-http");
+var cors = require("cors");
+const router = express.Router();
+
+app.use("/.netlify/functions/api", router);
 app.use(cors());
 app.use(express.static("public"));
 // Parse URL-encoded bodies (as sent by HTML forms)
@@ -18,11 +21,11 @@ const stripe = new stripeApi(
 
 const YOUR_DOMAIN = "https://ssjain13.github.io/";
 
-app.get("/", async (req, res) => {
+router.get("/", async (req, res) => {
   res.send("Server is running");
 });
 
-app.post("/create-checkout-session", async (req, res) => {
+router.post("/create-checkout-session", async (req, res) => {
   const p = req.body;
   try {
     const session = await stripe.checkout.sessions.create({
@@ -44,4 +47,5 @@ app.post("/create-checkout-session", async (req, res) => {
   }
 });
 
-app.listen(4242, () => console.log("Running on port 4242"));
+
+module.exports.handler = serverless(app);

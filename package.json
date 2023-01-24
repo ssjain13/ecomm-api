@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "description": "Stripe payment",
   "proxy": "https://checkout.stripe.com",
-  "main": "index.js",
+  "main": "api.js",
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "start": "netlify-lambda serve src",
+    "build": "netlify-lambda build src"
   },
   "keywords": [
     "stripe"
@@ -15,6 +17,8 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.18.2",
+    "netlify-lambda": "^2.0.15",
+    "serverless-http": "^3.1.1",
     "stripe": "^11.6.0"
   }
 }
