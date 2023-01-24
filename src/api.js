@@ -21,10 +21,12 @@ const stripe = new stripeApi(
 
 const YOUR_DOMAIN = "https://ssjain13.github.io/";
 
-router.get("/", async (req, res) => {
+router.get("/test", async (req, res) => {
   res.send("Server is running");
 });
-
+router.get("/", async (req, res) => {
+  res.send("Welcome");
+});
 router.post("/create-checkout-session", async (req, res) => {
   const p = req.body;
   try {
