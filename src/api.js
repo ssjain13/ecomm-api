@@ -1,13 +1,17 @@
 const express = require("express");
 const app = express();
+var cors = require("cors");
 // This is your test secret API key.
 const stripeApi = require("stripe");
 const serverless = require("serverless-http");
-var cors = require("cors");
+
 const router = express.Router();
 
 app.use("/.netlify/functions/api", router);
-app.use(cors());
+app.use(cors({
+  origin:"https://ssjain13.github.io/",
+
+}));
 app.use(express.static("public"));
 // Parse URL-encoded bodies (as sent by HTML forms)
 app.use(express.urlencoded());
