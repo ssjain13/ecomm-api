@@ -8,16 +8,30 @@ const serverless = require("serverless-http");
 const router = express.Router();
 
 app.use("/.netlify/functions/api", router);
-app.use(cors({
-  origin:"*",
-
-}));
+app.use(
+  cors({
+    origin: "https://ssjain13.github.io/",
+  })
+);
 app.use(express.static("public"));
 // Parse URL-encoded bodies (as sent by HTML forms)
 app.use(express.urlencoded());
 
 // Parse JSON bodies (as sent by API clients)
 app.use(express.json());
+/* // CORS (Cross-Origin Resource Sharing) headers to support Cross-site HTTP requests
+app.all('*', (req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  next();
+}); */
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "https://ssjain13.github.io/"); // Update to match the domain you will make the request from
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
 
 const stripe = new stripeApi(
   "sk_test_51MOIWsSGyTooPOuOwIsktCbzFaLJmVNkTXYrld5YAFYYmniQ7v5f5VMulMW2mcHjxRnGzj3QGO28FuogrYK6B8I700y96ZelYV"
@@ -52,6 +66,5 @@ router.post("/create-checkout-session", async (req, res) => {
     res.status(err.statusCode).send(err.message);
   }
 });
-
 
 module.exports.handler = serverless(app);
