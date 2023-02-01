@@ -9,7 +9,7 @@ const router = express.Router();
 
 app.use("/.netlify/functions/api", router);
 app.use(cors({
-  origin:"https://ssjain13.github.io/",
+  origin:"*",
 
 }));
 app.use(express.static("public"));
